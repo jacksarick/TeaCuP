@@ -89,7 +89,7 @@ var server = net.createServer(function(socket) {
 					var table = require(config.db + data.table + ".json");
 
 					// If they are getting data
-					if (data.type == "get"){
+					if (data.req == "get"){
 						response.status = 'success';
 
 						if (data.query != undefined) {
@@ -103,14 +103,14 @@ var server = net.createServer(function(socket) {
 					}
 
 					// If they are putting data
-					if (data.type == "put") {
+					if (data.req == "put") {
 						//TODO: Make put requests
 					}
 
-					// Unsupported request type
-					else {
-						response = error("unsupported request type");
-					}
+					// Unsupported request
+					// else {
+					// 	response = error("unsupported request");
+					// }
 				}
 			}
 
