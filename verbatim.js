@@ -5,8 +5,7 @@ var config = require("./config.json");
 
 contain = function (array, value) { return array.indexOf(value) > -1 }
 
-var error = "{'status': 'error'}";
-var sucess = "{'status': 'sucess'";
+var error = {'status': 'error'};
 
 function authenticate(data) {
 	// If the user's authentication checks out
@@ -34,9 +33,16 @@ var server = net.createServer(function(socket) {
 	// Welcome user to the socket
 	socket.write("{'status':'connected'}");
 
+	// Custom write function
+	socket.send = function(data) {
+		socket.write(JSON.stringify(data));
+	}
+
 
 	// When client sends data
 	socket.on('data', function(data) {
+		var response = {};
+
 		data = data.toString();
 
 		// Try to convert data to JSON
@@ -47,7 +53,6 @@ var server = net.createServer(function(socket) {
 		// If we fail, let the user know
 		catch(err) {
 			socket.write(error);
-			console.log("Request failed")
 		}
 
 		// If user is not authenticated...
@@ -56,8 +61,9 @@ var server = net.createServer(function(socket) {
 
 			// if the can access tables, let them know
 			if (socket.tables.length > 0) {
-				var neat = JSON.stringify(socket.tables);
-				socket.write(sucess + ", 'tables': " + neat + "}")
+				response.status = "sucess";
+				response.tables = socket.tables;
+				socket.send(response);
 			}
 
 			// If the user has no tables, bye bye
@@ -68,30 +74,31 @@ var server = net.createServer(function(socket) {
 
 		// Else...
 		else {
-			var response;
-
 			try {
 				if (!contain(socket.tables, data.table)) {
 					response = error;
 				}
+
 				else {
 
-					var table = require(data.table);
-					response = sucess + ", "
+					var table = require("./" + data.table);
+					response.status = 'sucess';
 
 					if (data.query != undefined) {
-						response += query(data.query, );
+						response.data = query(data.query, table);
 					}
 
 					else {
-						return JSON.stringify(require("./" + data.table));
+						response.data = table;
 					}
 				}
 			}
 
-			console.log(id + ": " + msg +" => "+ response)
+			catch(err){
+				response = error;
+			}
 
-			socket.write(response);
+			socket.send(response);
 		}
 	});
 
