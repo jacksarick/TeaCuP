@@ -2,10 +2,10 @@
 
 var net = require('net');
 var config = require("./config.json");
+var req = require("./request.js")
 
+// Simple functions
 contain = function (array, value) { return array.indexOf(value) > -1 }
-
-error = function (msg) { return {'status': 'error', "data": msg} };
 
 function authenticate(data) {
 	// If the user's authentication checks out
@@ -52,7 +52,7 @@ var server = net.createServer(function(socket) {
 
 		// If we fail, let the user know
 		catch(err) {
-			socket.write(error("could not parse request"));
+			socket.write(req.error("could not parse request"));
 		}
 
 		// If user is not authenticated...
@@ -72,7 +72,7 @@ var server = net.createServer(function(socket) {
 
 			// If the user has no tables, bye bye
 			else {
-				socket.end(error("authentication failed"));
+				socket.end(req.error("authentication failed"));
 			}
 		}
 
@@ -81,7 +81,7 @@ var server = net.createServer(function(socket) {
 			try {
 				// If the user can access the table, let them know
 				if (!contain(socket.tables, data.table)) {
-					response = error("access denied");
+					response = req.error("access denied");
 				}
 
 				else{
@@ -91,32 +91,24 @@ var server = net.createServer(function(socket) {
 					// If they are getting data
 					if (data.req === "get"){
 						response.status = 'success';
-
-						if (data.query != undefined) {
-							//TODO: Make queries
-							response.data = [data.query, table];
-						}
-
-						else {
-							response.data = table;
-						}
+						response.data = req.get(table, data.query);
 					}
 
 					// If they are putting data
 					if (data.req === "put") {
-						//TODO: Make put requests
+						response = req.put(table, data.query);
 					}
 
 					// Unsupported request
 					// else {
-					// 	response = error("unsupported request");
+					// 	response = req.error("unsupported request");
 					// }
 				}
 			}
 
 			// Generic failure
 			catch(err){
-				response = error("generic failure");
+				response = req.error("generic failure");
 			}
 
 			socket.send(response);

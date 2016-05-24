@@ -1,5 +1,5 @@
 {
-	"names": ["john", "stacy", "joe", "carol"],
-	"ages": [5, 34, 16, 21],
+	"names": {"john":5, "stacy":34, "joe":16, "carol":21},
+	"size": [78, 179, 132, 182],
 	"default": true
 }
