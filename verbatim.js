@@ -61,7 +61,7 @@ var server = net.createServer(function(socket) {
 
 			// if the can access tables, let them know
 			if (socket.tables.length > 0) {
-				response.status = "sucess";
+				response.status = "success";
 				response.tables = socket.tables;
 				socket.send(response);
 			}
@@ -82,7 +82,7 @@ var server = net.createServer(function(socket) {
 				else {
 
 					var table = require("./" + data.table);
-					response.status = 'sucess';
+					response.status = 'success';
 
 					if (data.query != undefined) {
 						response.data = query(data.query, table);
