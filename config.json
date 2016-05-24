@@ -1,7 +1,14 @@
 {
 	"port": 3333,
 	"users": {
-		"jack": "password",
-		"test": "dummy",
+		"jack": {
+			"pass": "password",
+			"tables": ["things", "stuff"]
+		},
+
+		"test": {
+			"pass": "dummy",
+			"tables": ["things", "other"]
+		}
 	}
 }
