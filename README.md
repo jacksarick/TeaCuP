@@ -10,7 +10,7 @@ $ nc localhost 3333
 => {'status':'connected'}
 <= {"user":"jack","pass":"password"}
 => {"status":"success","tables":["things","stuff"]}
-<= {"type":"get", "table":"things"}
+<= {"req":"get", "table":"things"}
 => {...data...}
 <= ^C
 $ 

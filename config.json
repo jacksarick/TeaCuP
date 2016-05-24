@@ -1,5 +1,6 @@
 {
 	"port": 3333,
+	"db": "./data/",
 	"users": {
 		"jack": {
 			"pass": "password",
