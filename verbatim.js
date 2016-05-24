@@ -3,6 +3,11 @@
 var net = require('net');
 var config = require("./config.json");
 
+contain = function (array, value) { return array.indexOf(value) > -1 }
+
+var error = "{'status': 'error'}";
+var sucess = "{'status': 'sucess'";
+
 function authenticate(data) {
 	// If the user's authentication checks out
 	if (data.user != undefined &&
@@ -41,7 +46,7 @@ var server = net.createServer(function(socket) {
 
 		// If we fail, let the user know
 		catch(err) {
-			socket.write("{'status': 'error'}");
+			socket.write(error);
 			console.log("Request failed")
 		}
 
@@ -51,20 +56,38 @@ var server = net.createServer(function(socket) {
 
 			// if the can access tables, let them know
 			if (socket.tables.length > 0) {
-				var neat = "['" + socket.tables.join("','") + "']";
-				socket.write("{'status': 'sucess', 'tables': " + neat + "}")
+				var neat = JSON.stringify(socket.tables);
+				socket.write(sucess + ", 'tables': " + neat + "}")
 			}
 
 			// If the user has no tables, bye bye
 			else {
-				socket.end("{'status': 'error'}");
+				socket.end(error);
 			}
 		}
 
 		// Else...
 		else {
-			var msg = data.replace(/[^\d]/g, "");
-			var response = "{'data':" + (msg*socket.name) + "}";
+			var response;
+
+			try {
+				if (!contain(socket.tables, data.table)) {
+					response = error;
+				}
+				else {
+
+					var table = require(data.table);
+					response = sucess + ", "
+
+					if (data.query != undefined) {
+						response += query(data.query, );
+					}
+
+					else {
+						return JSON.stringify(require("./" + data.table));
+					}
+				}
+			}
 
 			console.log(id + ": " + msg +" => "+ response)
 
@@ -84,7 +107,6 @@ var server = net.createServer(function(socket) {
 		console.log('Socket Error: ', error.message);
 	});
 });
-
 
 // Listening for any problems with the server
 server.on('error', function(error) {
