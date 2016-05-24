@@ -1,4 +1,5 @@
-##Use
+Use
+---
 
 Sample use with netcat with intstance running on localhost:3333
 ```
