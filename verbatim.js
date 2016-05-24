@@ -79,35 +79,39 @@ var server = net.createServer(function(socket) {
 		// Else...
 		else {
 			try {
-				// If they are getting data
-				if (data.type == "get"){
-					if (!contain(socket.tables, data.table)) {
-						response = error;
-					}
+				// If the user can access the table, let them know
+				if (!contain(socket.tables, data.table)) {
+					response = error;
+				}
 
-					else {
+				else{
+					var table = require("./" + data.table + ".json");
 
-						var table = require("./" + data.table + ".json");
-						response.status = 'success';
-
-						if (data.query != undefined) {
-							response.data = query(data.query, table);
-						}
+					// If they are getting data
+					if (data.type == "get"){
 
 						else {
-							response.data = table;
+							response.status = 'success';
+
+							if (data.query != undefined) {
+								response.data = query(data.query, table);
+							}
+
+							else {
+								response.data = table;
+							}
 						}
 					}
-				}
 
-				// If they are putting data
-				if (data.type == "put") {
-					null;
-				}
+					// If they are putting data
+					if (data.type == "put") {
+						null;
+					}
 
-				// Unsupported request type
-				else {
-					response = error;
+					// Unsupported request type
+					else {
+						response = error;
+					}
 				}
 			}
 
