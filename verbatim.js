@@ -14,9 +14,7 @@ function authenticate(data) {
 		config.users[data.user] != undefined &&
 		config.users[data.user].pass == data.pass) {
 
-		console.log("User " + data.user + " checked in");
-
-		return config.users[data.user]["tables"];
+		return [data.user, config.users[data.user]["tables"]];
 	}
 
 	// Else, the user has access to nothing
@@ -33,11 +31,11 @@ var server = net.createServer(function(socket) {
 	console.log("Opened new socket");
 
 	// Welcome user to the socket
-	socket.write("{'status':'connected'}");
+	socket.write("{'status':'connected'}\n");
 
 	// Custom write function
 	socket.send = function(data) {
-		socket.write(JSON.stringify(data));
+		socket.write(JSON.stringify(data) + "\n");
 	}
 
 
@@ -59,7 +57,11 @@ var server = net.createServer(function(socket) {
 
 		// If user is not authenticated...
 		if(socket.tables.length < 1){
-			socket.tables = authenticate(data);
+			var auth = authenticate(data)
+			socket.name = auth[0];
+			socket.tables = auth[1];
+			console.log("User " + socket.name + " checked in");
+
 
 			// if the can access tables, let them know
 			if (socket.tables.length > 0) {
@@ -77,22 +79,35 @@ var server = net.createServer(function(socket) {
 		// Else...
 		else {
 			try {
-				if (!contain(socket.tables, data.table)) {
-					response = error;
-				}
-
-				else {
-
-					var table = require("./" + data.table + ".json");
-					response.status = 'success';
-
-					if (data.query != undefined) {
-						response.data = query(data.query, table);
+				// If they are getting data
+				if (data.type == "get"){
+					if (!contain(socket.tables, data.table)) {
+						response = error;
 					}
 
 					else {
-						response.data = table;
+
+						var table = require("./" + data.table + ".json");
+						response.status = 'success';
+
+						if (data.query != undefined) {
+							response.data = query(data.query, table);
+						}
+
+						else {
+							response.data = table;
+						}
 					}
+				}
+
+				// If they are putting data
+				if (data.type == "put") {
+					null;
+				}
+
+				// Unsupported request type
+				else {
+					response = error;
 				}
 			}
 
@@ -108,6 +123,7 @@ var server = net.createServer(function(socket) {
 	// When client leaves
 	socket.on('end', function() {
 		// Log it to the server output
+		console.log("User " + socket.name + " checked out")
 		console.log("Socket closed");
 	});
 

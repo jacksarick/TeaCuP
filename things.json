@@ -1,0 +1,5 @@
+{
+	"names": ["john", "stacy", "joe", "carol"],
+	"ages": [5, 34, 16, 21],
+	"default": true
+}
