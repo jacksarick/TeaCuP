@@ -1,6 +1,10 @@
+#Verbatim
+
+A quick little data-storage engine running on tcp.
+
 ##Use
 
-Sample use with netcat with intstance running on localhost:3333
+Sample use with netcat with intstance running on `localhost:3333`
 ```bash
 $ nc localhost 3333
 => {'status':'connected'}
