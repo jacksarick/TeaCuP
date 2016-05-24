@@ -5,7 +5,7 @@ var config = require("./config.json");
 
 contain = function (array, value) { return array.indexOf(value) > -1 }
 
-var error = {'status': 'error'};
+error = function (msg) { return {'status': 'error', "data": msg} };
 
 function authenticate(data) {
 	// If the user's authentication checks out
@@ -52,7 +52,7 @@ var server = net.createServer(function(socket) {
 
 		// If we fail, let the user know
 		catch(err) {
-			socket.write(error);
+			socket.write(error("could not parse request"));
 		}
 
 		// If user is not authenticated...
@@ -72,7 +72,7 @@ var server = net.createServer(function(socket) {
 
 			// If the user has no tables, bye bye
 			else {
-				socket.end(error);
+				socket.end(error("authentication failed"));
 			}
 		}
 
@@ -81,42 +81,42 @@ var server = net.createServer(function(socket) {
 			try {
 				// If the user can access the table, let them know
 				if (!contain(socket.tables, data.table)) {
-					response = error;
+					response = error("access denied");
 				}
 
 				else{
-					var table = require("./" + data.table + ".json");
+					//TODO: Make new table if one does not exist
+					var table = require(config.db + data.table + ".json");
 
 					// If they are getting data
 					if (data.type == "get"){
+						response.status = 'success';
+
+						if (data.query != undefined) {
+							//TODO: Make queries
+							response.data = [data.query, table];
+						}
 
 						else {
-							response.status = 'success';
-
-							if (data.query != undefined) {
-								response.data = query(data.query, table);
-							}
-
-							else {
-								response.data = table;
-							}
+							response.data = table;
 						}
 					}
 
 					// If they are putting data
 					if (data.type == "put") {
-						null;
+						//TODO: Make put requests
 					}
 
 					// Unsupported request type
 					else {
-						response = error;
+						response = error("unsupported request type");
 					}
 				}
 			}
 
+			// Generic failure
 			catch(err){
-				response = error;
+				response = error("generic failure");
 			}
 
 			socket.send(response);
