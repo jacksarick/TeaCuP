@@ -14,6 +14,8 @@ function authenticate(data) {
 		config.users[data.user] != undefined &&
 		config.users[data.user].pass == data.pass) {
 
+		console.log("User " + data.user + " checked in");
+
 		return config.users[data.user]["tables"];
 	}
 
@@ -81,7 +83,7 @@ var server = net.createServer(function(socket) {
 
 				else {
 
-					var table = require("./" + data.table);
+					var table = require("./" + data.table + ".json");
 					response.status = 'success';
 
 					if (data.query != undefined) {
