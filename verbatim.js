@@ -12,7 +12,7 @@ function authenticate(data) {
 	if (data.user != undefined &&
 		data.pass != undefined &&
 		config.users[data.user] != undefined &&
-		config.users[data.user].pass == data.pass) {
+		config.users[data.user].pass === data.pass) {
 
 		return [data.user, config.users[data.user]["tables"]];
 	}
@@ -89,7 +89,7 @@ var server = net.createServer(function(socket) {
 					var table = require(config.db + data.table + ".json");
 
 					// If they are getting data
-					if (data.req == "get"){
+					if (data.req === "get"){
 						response.status = 'success';
 
 						if (data.query != undefined) {
@@ -103,7 +103,7 @@ var server = net.createServer(function(socket) {
 					}
 
 					// If they are putting data
-					if (data.req == "put") {
+					if (data.req === "put") {
 						//TODO: Make put requests
 					}
 
