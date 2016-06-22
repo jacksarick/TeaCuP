@@ -9,6 +9,7 @@ contain = function (array, value) { return array.indexOf(value) > -1 }
 
 function authenticate(data) {
 	// If the user's authentication checks out
+	// TODO: No plaintext passwords
 	if (data.user != undefined &&
 		data.pass != undefined &&
 		config.users[data.user] != undefined &&
@@ -76,14 +77,15 @@ var server = net.createServer(function(socket) {
 			}
 		}
 
-		// Else...
+		// If user is authenticated...
 		else {
 			try {
-				// If the user can access the table, let them know
+				// If the user can't access the table, let them know
 				if (!contain(socket.tables, data.table)) {
 					response = req.error("access denied");
 				}
 
+				// If the user can access the table, proceed
 				else{
 					//TODO: Make new table if one does not exist
 					var table = require(config.db + data.table + ".json");

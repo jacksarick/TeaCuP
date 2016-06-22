@@ -1,15 +1,15 @@
-function find(data, args, set) {
+function find(data, args) {
 	/* 
 	Context: Given a JS object and a string, return as if string was an eval
-	Example: find({"names": {"john":5, "stacy":34}}, ["names", "john"], 10) => {"names": {"john":10, "stacy":34}}
+	Example: find({"names": {"john":5, "stacy":34}}, ["names", "john"]) => 5}
 
 	This is actually a cool little piece of code IMO. The recursion loops through each argument and applys them one by one to the data 
 	*/
-	if (args.length == 1){
+	if (args.length == 0){
 		return data;
 	}
 
-	return flatten(data[args.shift()], args);
+	return find(data[args.shift()], args);
 }
 
 request = {
@@ -21,13 +21,14 @@ request = {
 
 	// Get request
 	get: function(table, query) {
-		if (query != undefined) {
-			//TODO: Make queries
+		// If it's just a table, they want a table.
+		if (query === undefined) {
 			return table;
 		}
 
+		// Else, they have an actual request
 		else {
-			return table;
+			return find(table, query);
 		}
 	},
 
