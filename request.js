@@ -39,8 +39,7 @@ request = {
 		}
 
 		else {
-			
-			return table;
+			//REUSE FIND CODE WITH SET. every level "equals" the next, until we hit path, then equals to args
 		}
 	},
 
