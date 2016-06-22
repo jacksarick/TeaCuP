@@ -8,6 +8,7 @@ set messages {
 	{{"user":"jack","pass":"password"}}
 	{{"req":"get", "table":"things"}}
 	{{"req":"get", "table":"things", "query":["names","john"]}}
+	{{"req":"get", "table":"things", "query":["names"], "case":function(x){ x[0] == "j"}}}
 }
 
 # Listen for connection
