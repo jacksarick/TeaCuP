@@ -1,0 +1,3 @@
+- [ ] Checkout tables
+- [ ] Recursive PUT (JSON means array and list)
+- [ ] Save?
