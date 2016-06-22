@@ -1,6 +1,6 @@
-#Verbatim
+#TeaCuP
 
-A quick little data-storage engine running on tcp.
+A quick little data-storage engine running on TCP.
 
 ##Use
 
