@@ -11,11 +11,11 @@ set messages {
 }
 
 # Listen for connection
-puts "<= [gets $chan]"
+puts "=> [gets $chan]"
 
 for {set i 0} {$i < 3} {incr i} {
 	# Say our thing to console
-    puts "=> [lindex $messages $i]"
+    puts "<= [lindex $messages $i]"
     # Say our thing to server
 	puts $chan [lindex $messages $i]
 
@@ -23,7 +23,7 @@ for {set i 0} {$i < 3} {incr i} {
 	flush $chan
 
 	# Listen for response
-	puts "<= [gets $chan]"
+	puts "=> [gets $chan]"
 }
 
 puts "Done"
