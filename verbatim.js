@@ -101,6 +101,11 @@ var server = net.createServer(function(socket) {
 						response = req.put(table, data.query);
 					}
 
+					// If the user is saving data
+					if (data.req === "save") {
+						response.status = req.save(table);
+					}
+
 					// Unsupported request
 					// else {
 					// 	response = req.error("unsupported request");

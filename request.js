@@ -5,7 +5,7 @@ function find(data, args) {
 
 	This is actually a cool little piece of code IMO. The recursion loops through each argument and applys them one by one to the data 
 	*/
-	if (args.length == 0){
+	if (args.length === 0){
 		return data;
 	}
 
@@ -42,6 +42,11 @@ request = {
 			
 			return table;
 		}
+	},
+
+	// Save request
+	save: function(table) {
+		return "failed";
 	}
 }
 
