@@ -25,3 +25,5 @@ for {set i 0} {$i < 3} {incr i} {
 	# Listen for response
 	puts "<= [gets $chan]"
 }
+
+puts "Done"
