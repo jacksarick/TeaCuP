@@ -11,9 +11,9 @@ $ nc localhost 3333
 <= {"user":"jack","pass":"password"}
 => {"status":"success","tables":["things","stuff"]}
 <= {"req":"get", "table":"things"}
-=> {...data...}
+=> {"status":"success","data":{"names":{"john":5,"stacy":34,"joe":16,"carol":21},"size":[78,179,132,182],"default":true}}
 <= {"req":"get", "table":"things", "query":["names","john"]}
-=> {...data...}
+=> {"status":"success","data":5}
 <= ^C
 $ 
 ```
