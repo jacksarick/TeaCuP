@@ -12,6 +12,7 @@ function find(data, args) {
 	return find(data[args.shift()], args);
 }
 
+
 // List of tables that are checked out
 var checkout = {};
 
@@ -53,7 +54,7 @@ request = {
 		}
 	},
 
-	// Save request
+	// Checkout request
 	checkout: function(table, token) {
 		//If it's not taken (false or undefined)
 		if (!checkout[table]){
@@ -65,6 +66,25 @@ request = {
 		// Else, it's taken, so tell the user
 		else {
 			return "table checked out";
+		}
+	},
+
+	// Checkin request
+	checkin: function(table, token) {
+		//If it's not taken (false or undefined)
+		if (!checkout[table]){
+			return "table not checked out";
+		}
+
+		// If the user's token works, let them know
+		if (checkout[table] === token){
+			checkout[table] = false;
+			return "sucess";
+		}
+
+		// Else, tell user they failed
+		else {
+			return "token table mismatch";
 		}
 	}
 }

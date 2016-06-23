@@ -105,6 +105,10 @@ var server = net.createServer(function(socket) {
 						response.status = req.checkout(table, data.token)
 					}
 
+					if (data.req === "checkin"){
+						response.status = req.checkin(table, data.token)
+					}
+
 					// Unsupported request
 					// else {
 					// 	response = req.error("unsupported request");
