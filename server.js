@@ -101,9 +101,8 @@ var server = net.createServer(function(socket) {
 						response = req.put(table, data.query);
 					}
 
-					// If the user is saving data
-					if (data.req === "save") {
-						response.status = req.save(table);
+					if (data.req === "checkout"){
+						response.status = req.checkout(table, data.token)
 					}
 
 					// Unsupported request

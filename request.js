@@ -12,6 +12,9 @@ function find(data, args) {
 	return find(data[args.shift()], args);
 }
 
+// List of tables that are checked out
+var checkout = {};
+
 request = {
 
 	error: function (msg) {
@@ -51,8 +54,18 @@ request = {
 	},
 
 	// Save request
-	save: function(table) {
-		return "failed";
+	checkout: function(table, token) {
+		//If it's not taken (false or undefined)
+		if (!checkout[table]){
+			// Set it to the user's token
+			checkout[table] = token;
+			return "sucess";
+		}
+
+		// Else, it's taken, so tell the user
+		else {
+			return "table checked out";
+		}
 	}
 }
 

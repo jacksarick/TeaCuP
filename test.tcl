@@ -11,6 +11,11 @@ set messages {
 	{{"req":"get", "table":"things", "query":["numbers"], "filter":"x > 140"}}
 }
 
+set messages {
+	{{"user":"jack","pass":"password"}}
+	{{"req":"checkout", "table":"things", "token":"password"}}
+}
+
 # Listen for connection
 puts "=> [gets $chan]"
 
