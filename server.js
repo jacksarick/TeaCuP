@@ -93,7 +93,7 @@ var server = net.createServer(function(socket) {
 					// If they are getting data
 					if (data.req === "get"){
 						response.status = 'success';
-						response.data = req.get(table, data.query);
+						response.data = req.get(table, data.query, data.filter);
 					}
 
 					// If they are putting data

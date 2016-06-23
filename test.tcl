@@ -8,13 +8,13 @@ set messages {
 	{{"user":"jack","pass":"password"}}
 	{{"req":"get", "table":"things"}}
 	{{"req":"get", "table":"things", "query":["names","john"]}}
-	{{"req":"get", "table":"things", "query":["names"], "case":function(x){ x[0] == "j"}}}
+	{{"req":"get", "table":"things", "query":["numbers"], "filter":"x > 140"}}
 }
 
 # Listen for connection
 puts "=> [gets $chan]"
 
-for {set i 0} {$i < 3} {incr i} {
+for {set i 0} {$i < [llength $messages]} {incr i} {
 	# Say our thing to console
     puts "<= [lindex $messages $i]"
     # Say our thing to server

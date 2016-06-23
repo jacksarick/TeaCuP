@@ -20,13 +20,20 @@ request = {
 
 
 	// Get request
-	get: function(table, query) {
+	get: function(table, query, val) {
 		// If it's just a table, they want a table.
 		if (query === undefined) {
 			return table;
 		}
 
-		// Else, they have an actual request
+		// If they included a filer, find and apply
+		if (val != undefined) {
+			// Just converts String -> Function
+			var fn_val = new Function("x", "return " + val);
+			return find(table, query).filter(fn_val);
+		}
+
+		// Else, they have the want a query
 		else {
 			return find(table, query);
 		}

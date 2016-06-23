@@ -1,4 +1,5 @@
-- [ ] GET callbacks (let user include a callback to filter with)
+- [x] GET filters
 - [ ] Checkout tables
 - [ ] Recursive PUT (JSON means array and list)
 - [ ] Save?
+- [ ] GET callbacks (Allow actual functions)
