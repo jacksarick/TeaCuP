@@ -101,10 +101,12 @@ var server = net.createServer(function(socket) {
 						response = req.put(table, data.query);
 					}
 
+					// If they are checking out a table
 					if (data.req === "checkout"){
 						response.status = req.checkout(table, data.token)
 					}
 
+					// If they are checking in a table
 					if (data.req === "checkin"){
 						response.status = req.checkin(table, data.token)
 					}
