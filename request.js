@@ -1,17 +1,16 @@
-function find(data, args) {
+function find(data, path) {
 	/* 
 	Context: Given a JS object and a string, return as if string was an eval
 	Example: find({"names": {"john":5, "stacy":34}}, ["names", "john"]) => 5}
 
 	This is actually a cool little piece of code IMO. The recursion loops through each argument and applys them one by one to the data 
 	*/
-	if (args.length === 0){
+	if (path.length === 0){
 		return data;
 	}
 
-	return find(data[args.shift()], args);
+	return find(data[path.shift()], path);
 }
-
 
 // List of tables that are checked out
 var checkout = {};
@@ -44,13 +43,13 @@ request = {
 	},
 
 	// Put request
-	put: function(table, query) {
-		if (query === undefined || query.length != 2) {
+	put: function(table, query, val) {
+		if (query === undefined) {
 			return error("bad query");
 		}
 
 		else {
-			//REUSE FIND CODE WITH SET. every level "equals" the next, until we hit path, then equals to args
+			//I have no idea how to do this. I'll try again tomorrow
 		}
 	},
 
