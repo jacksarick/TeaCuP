@@ -3,3 +3,5 @@
 - [ ] Recursive PUT (JSON means array and list)
 - [ ] Save?
 - [ ] GET callbacks (Allow actual functions)
+- [ ] Commands (stop, reload, etc.)
+- [ ] GUI?
