@@ -1,21 +1,25 @@
 #TeaCuP
 
-A quick little data-storage engine running on TCP.
+A quick, little, standalone, data-storage engine running on TCP.
 
 ##Use
 
-Sample use with netcat with intstance running on `localhost:3333`
+Sample use with netcat with intstance running on `localhost:3333` that shows all available commands.
 ```bash
 $ nc localhost 3333
 => {'status':'connected'}
 <= {"user":"jack","pass":"password"}
 => {"status":"success","tables":["things","stuff"]}
 <= {"req":"get", "table":"things"}
-=> {"status":"success","data":{"names":{"john":5,"stacy":34,"joe":16,"carol":21},"numbers":[78,179,132,182,12,9],"default":true}}
-<= {"req":"get", "table":"things", "query":["names","john"]}
-=> {"status":"success","data":5}
-<= {"req":"get", "table":"things", "query":["numbers"], "filter":"x > 140"}
-=> {"status":"success","data":[179,182]}
+=> {"status":"success","data":{"names":{"john":20,"stacy":34,"joe":16,"carol":21},"numbers":[78,179,132,182,12,9],"default":true}}
+<= {"req":"checkout", "table":"things", "token":"pass1234"}
+=> {"status":"sucess"}
+<= {"req":"put", "token":"password", "table":"things", "query":["names","john"], "val":40}
+=> {"status":"sucess"}
+<= {"req":"get", "table":"things"}
+=> {"status":"success","data":{"names":{"john":40,"stacy":34,"joe":16,"carol":21},"numbers":[78,179,132,182,12,9],"default":true}}
+<= {"req":"checkin", "table":"things", "token":"pass1234"}
+=> {"status":"sucess"}
 <= ^C
 $ 
 ```

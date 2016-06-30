@@ -1,7 +1,9 @@
 - [x] GET filters
 - [x] Checkout tables
-- [ ] Recursive PUT (JSON means array and list)
-- [ ] Save?
+- [x] Recursive PUT (JSON means array and list)
+- [x] Save? [Wasn't needed]
 - [ ] GET callbacks (Allow actual functions)
 - [ ] Commands (stop, reload, etc.)
+- [ ] Error codes
+- [ ] Documentation
 - [ ] GUI?
