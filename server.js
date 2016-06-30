@@ -26,6 +26,7 @@ function authenticate(data) {
 
 var server = net.createServer(function(socket) {
 	// Default access is no tables
+	var socket;
 	socket.tables = [];
 
 	// Log opening to output
@@ -61,7 +62,7 @@ var server = net.createServer(function(socket) {
 			socket.tables = auth[1];
 			console.log("User " + socket.name + " checked in");
 
-
+			console.log(socket.tables.length)
 			// if the can access tables, let them know
 			if (socket.tables.length > 0) {
 				response.status = "success";
