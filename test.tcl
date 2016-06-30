@@ -20,7 +20,7 @@ set messages {
 set messages {
 	{{"user":"jack","pass":"password"}}
 	{{"req":"get", "table":"things"}}
-	{{"req":"put", "table":"things", "query":["names","john"], "val":20}}
+	{{"req":"put", "token":"password", "table":"things", "query":["names","john"], "val":40}}
 	{{"req":"get", "table":"things"}}
 }
 

@@ -63,18 +63,28 @@ request = {
 	},
 
 	// Put request
-	put: function(table, query, val, name) {
-		if (table === undefined ||
-			query === undefined ||
-			val === undefined) {
-			return "bad query";
+	put: function(table, token, query, val, name) {
+		if (!checkout[table]){
+			return "table not checked out"
 		}
 
-		else {
-			data = update(table, query, val);
-			write(name, data);
-			return "sucess"
+		if (checkout[table] != token){
+			return "table has been checked out"
+		}
 
+		else{
+			if (table === undefined ||
+				query === undefined ||
+				val === undefined) {
+				return "bad query";
+			}
+
+			else {
+				data = update(table, query, val);
+				write(name, data);
+				return "sucess"
+
+			}
 		}
 	},
 

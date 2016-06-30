@@ -99,7 +99,7 @@ var server = net.createServer(function(socket) {
 
 					// If they are putting data
 					if (data.req === "put") {
-						response.status = req.put(table, data.query, data.val, table_name);
+						response.status = req.put(table, data.token, data.query, data.val, table_name);
 					}
 
 					// If they are checking out a table
