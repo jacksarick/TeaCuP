@@ -11,13 +11,13 @@ $ nc localhost 3333
 <= {"user":"jack","pass":"password"}
 => {"status":"success","tables":["things","stuff"]}
 <= {"req":"get", "table":"things"}
-=> {"status":"success","data":{"names":{"john":20,"stacy":34,"joe":16,"carol":21},"numbers":[78,179,132,182,12,9],"default":true}}
+=> {"status":"success","data":{"names":{"john":20,"stacy":34,"joe":16,"carol":21} ... }
 <= {"req":"checkout", "table":"things", "token":"pass1234"}
 => {"status":"sucess"}
 <= {"req":"put", "token":"password", "table":"things", "query":["names","john"], "val":40}
 => {"status":"sucess"}
 <= {"req":"get", "table":"things"}
-=> {"status":"success","data":{"names":{"john":40,"stacy":34,"joe":16,"carol":21},"numbers":[78,179,132,182,12,9],"default":true}}
+=> {"status":"success","data":{"names":{"john":40,"stacy":34,"joe":16,"carol":21} ... }
 <= {"req":"checkin", "table":"things", "token":"pass1234"}
 => {"status":"sucess"}
 <= ^C
