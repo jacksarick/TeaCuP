@@ -12,6 +12,16 @@ function find(data, path) {
 	return find(data[path.shift()], path);
 }
 
+function update(data, path, value) {
+	if (path.length === 1){
+		data[path[0]] = value;
+		return data;
+	}
+
+	data[path[0]] = update(data[path.shift()], path, value);
+	return data
+}
+
 // List of tables that are checked out
 var checkout = {};
 
@@ -49,7 +59,7 @@ request = {
 		}
 
 		else {
-			//I have no idea how to do this. I'll try again tomorrow
+			data = update(table, query, val);
 		}
 	},
 
