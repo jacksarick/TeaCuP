@@ -1,9 +1,12 @@
+var fs = require('fs');
+var config = require("./config.json");
+
 function find(data, path) {
 	/* 
 	Context: Given a JS object and a string, return as if string was an eval
 	Example: find({"names": {"john":5, "stacy":34}}, ["names", "john"]) => 5}
 
-	This is actually a cool little piece of code IMO. The recursion loops through each argument and applys them one by one to the data 
+	This is actually a cool little piece of code IMO. The recursion loops through each argument and applys them one by one to the data
 	*/
 	if (path.length === 0){
 		return data;
@@ -13,6 +16,7 @@ function find(data, path) {
 }
 
 function update(data, path, value) {
+	// Pretty much the same as GET, but returns full lists, and returns the new value instead of the actual
 	if (path.length === 1){
 		data[path[0]] = value;
 		return data;
@@ -20,6 +24,12 @@ function update(data, path, value) {
 
 	data[path[0]] = update(data[path.shift()], path, value);
 	return data
+}
+
+function write(file, data) {
+	fs.writeFile(file, JSON.stringify(data), function (err) {
+		if (err){ console.log(err) }
+	});
 }
 
 // List of tables that are checked out
@@ -53,13 +63,18 @@ request = {
 	},
 
 	// Put request
-	put: function(table, query, val) {
-		if (query === undefined) {
-			return error("bad query");
+	put: function(table, query, val, name) {
+		if (table === undefined ||
+			query === undefined ||
+			val === undefined) {
+			return "bad query";
 		}
 
 		else {
 			data = update(table, query, val);
+			write(name, data);
+			return "sucess"
+
 		}
 	},
 

@@ -88,7 +88,8 @@ var server = net.createServer(function(socket) {
 				// If the user can access the table, proceed
 				else{
 					//TODO: Make new table if one does not exist
-					var table = require(config.db + data.table + ".json");
+					var table_name = config.db + data.table + ".json";
+					var table = require(table_name);
 
 					// If they are getting data
 					if (data.req === "get"){
@@ -98,7 +99,7 @@ var server = net.createServer(function(socket) {
 
 					// If they are putting data
 					if (data.req === "put") {
-						response = req.put(table, data.query);
+						response.status = req.put(table, data.query, data.val, table_name);
 					}
 
 					// If they are checking out a table
