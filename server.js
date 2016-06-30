@@ -44,11 +44,9 @@ var server = net.createServer(function(socket) {
 	socket.on('data', function(data) {
 		var response = {};
 
-		data = data.toString();
-
 		// Try to convert data to JSON
 		try	{
-			data = JSON.parse(data);
+			data = JSON.parse(data.toString());
 		}
 
 		// If we fail, let the user know

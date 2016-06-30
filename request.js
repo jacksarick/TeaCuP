@@ -38,7 +38,7 @@ var checkout = {};
 request = {
 
 	error: function (msg) {
-		return {'status': 'error', "data": msg} 
+		return JSON.stringify({'status': 'error', "data": msg});
 	},
 
 
