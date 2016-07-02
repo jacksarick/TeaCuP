@@ -20,14 +20,14 @@ function authenticate(data) {
 
 	// Else, the user has access to nothing
 	else {
-		return [];
+		return ["not_logged_in", []];
 	}
 }
 
 var server = net.createServer(function(socket) {
 	// Default access is no tables
 	var socket;
-	socket.tables = [];
+	var authenticated = false;
 
 	// Log opening to output
 	console.log("Opened new socket");
@@ -55,16 +55,16 @@ var server = net.createServer(function(socket) {
 			socket.write(req.error("could not parse request"));
 		}
 
-		// If user is not authenticated...
-		if(socket.tables.length < 1){
+		if (!authenticated){
 			var auth = authenticate(data)
 			socket.name = auth[0];
 			socket.tables = auth[1];
 			console.log("User " + socket.name + " checked in");
 
-			console.log(socket.tables.length)
 			// if the can access tables, let them know
 			if (socket.tables.length > 0) {
+				authenticated = true;
+
 				response.status = "success";
 				response.tables = socket.tables;
 				socket.send(response);

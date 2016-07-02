@@ -6,23 +6,21 @@ set chan [socket localhost 3333]
 # Things we want to say
 set messages {
 	{{"user":"jack","pass":"password"}}
-	{{"req":"get", "table":"things"}}
 	{{"req":"get", "table":"things", "query":["names","john"]}}
-	{{"req":"get", "table":"things", "query":["numbers"], "filter":"x > 140"}}
 }
 
-set messages {
-	{{"user":"jack","pass":"password"}}
-	{{"req":"checkout", "table":"things", "token":"password"}}
-	{{"req":"checkin", "table":"things", "token":"password"}}
-}
+# set messages {
+# 	{{"user":"jack","pass":"password"}}
+# 	{{"req":"checkout", "table":"things", "token":"password"}}
+# 	{{"req":"checkin", "table":"things", "token":"password"}}
+# }
 
-set messages {
-	{{"user":"jack","pass":"password"}}
-	{{"req":"get", "table":"things"}}
-	{{"req":"put", "token":"password", "table":"things", "query":["names","john"], "val":40}}
-	{{"req":"get", "table":"things"}}
-}
+# set messages {
+# 	{{"user":"jack","pass":"password"}}
+# 	{{"req":"get", "table":"things"}}
+# 	{{"req":"put", "token":"password", "table":"things", "query":["names","john"], "val":40}}
+# 	{{"req":"get", "table":"things"}}
+# }
 
 # Listen for connection
 puts "=> [gets $chan]"
