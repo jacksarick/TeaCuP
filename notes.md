@@ -2,7 +2,8 @@
 - [x] Checkout tables
 - [x] Recursive PUT (JSON means array and list)
 - [x] Save? [Wasn't needed]
-- [ ] GET callbacks (Allow actual functions)
+- [x] GET callbacks (Allow actual functions)
+- [ ] Rewrite error module (Make them terminal)
 - [x] Commands (stop, reload, etc.) [I'll get back to this, but right now I don't see any commands that would be useful]
 - [ ] Error codes
 - [ ] Secure Passwords/Login (Ideally ssh key based, or something similar)

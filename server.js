@@ -81,7 +81,7 @@ var server = net.createServer(function(socket) {
 			try {
 				// If the user can't access the table, let them know
 				if (!contain(socket.tables, data.table)) {
-					response = req.error("access denied");
+					socket.end(req.error("access denied"));
 				}
 
 				// If the user can access the table, proceed
@@ -113,14 +113,14 @@ var server = net.createServer(function(socket) {
 
 					// Unsupported request
 					// else {
-					// 	response = req.error("unsupported request");
+					// 	socket.end(req.error("unsupported request"));
 					// }
 				}
 			}
 
 			// Generic failure
 			catch(err){
-				response = req.error("generic failure");
+				socket.end(req.error("generic failure"));
 			}
 
 			socket.send(response);

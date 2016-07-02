@@ -6,7 +6,7 @@ set chan [socket localhost 3333]
 # Things we want to say
 set messages {
 	{{"user":"jack","pass":"password"}}
-	{{"req":"get", "table":"things", "query":["names","john"]}}
+	{{"req":"get", "table":"things", "query":["numbers"], "filter":"function(o){ return o > 100 } "}}
 }
 
 # set messages {
