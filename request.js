@@ -23,7 +23,7 @@ function update(data, path, value) {
 	}
 
 	data[path[0]] = update(data[path.shift()], path, value);
-	return data
+	return data;
 }
 
 function write(file, data) {
@@ -51,7 +51,7 @@ request = {
 
 		// If they included a filer, find and apply
 		if (fn != undefined) {
-			func = eval("f = " + fn)
+			func = eval("f = " + fn);
 			return find(table, query).filter(func);
 		}
 
@@ -64,11 +64,11 @@ request = {
 	// Put request
 	put: function(table, token, query, val, name) {
 		if (!checkout[table]){
-			return "table not checked out"
+			return "table not checked out";
 		}
 
 		if (checkout[table] != token){
-			return "table has been checked out"
+			return "table has been checked out";
 		}
 
 		else{
@@ -81,7 +81,7 @@ request = {
 			else {
 				data = update(table, query, val);
 				write(name, data);
-				return "sucess"
+				return "sucess";
 
 			}
 		}
