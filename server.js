@@ -47,15 +47,8 @@ var server = net.createServer(function(socket) {
 	socket.on('data', function(data) {
 		var response = {};
 
-		// Try to convert data to JSON
-		try	{
-			data = JSON.parse(data.toString());
-		}
+		data = utils.convert(data, function() {error.warn("failed to parse")});
 
-		// If we fail, let the user know
-		catch(err) {
-			socket.write(req.error("could not parse request"));
-		}
 
 		if (!authenticated){
 			var auth = authenticate(data)
