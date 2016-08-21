@@ -1,8 +1,10 @@
 #!/usr/local/bin/node
 
-var net = require('net');
+var net    = require('net');
 var config = require("./config.json");
-var req = require("./request.js")
+var req    = require("./js/request.js");
+var utils  = require("./js/utils.js");
+var error  = require("./js/error.js")
 
 // Simple functions
 contain = function (array, value) { return array.indexOf(value) > -1 }
