@@ -24,4 +24,4 @@ $ nc localhost 3333
 $ 
 ```
 
-To see an example happen lighting fast, open up a verbatim and run `test.tcl`. Why are my tests written in a unsexy language like TCL you may ask? It's adorable, super small to write for stuff like this, and it just works.
+To interact with the server on the command line, I suggest using `netcat`. To see an example happen lighting fast, open up an instance and run `test.tcl`. Why are my tests written in a unsexy language like TCL, you may ask? It's adorable, super small to write for stuff like this, and it just works.
