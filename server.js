@@ -2,146 +2,36 @@
 
 var net    = require('net');
 var config = require("./config.json");
-var req    = require("./js/request.js");
 var utils  = require("./js/utils.js");
-var error  = require("./js/error.js")
-
-// Simple functions
-contain = function (array, value) { return array.indexOf(value) > -1 }
-
-function authenticate(data) {
-	// If the user's authentication checks out
-	// TODO: No plaintext passwords
-	if (data.user != undefined &&
-		data.pass != undefined &&
-		config.users[data.user] != undefined &&
-		config.users[data.user].pass === data.pass) {
-
-		return [data.user, config.users[data.user]["tables"]];
-	}
-
-	// Else, the user has access to nothing
-	else {
-		return ["not_logged_in", []];
-	}
-}
+var log    = require("./js/log.js");
+var response = require("./js/response.js");
 
 var server = net.createServer(function(socket) {
-	// Default access is no tables
-	var socket;
-	var authenticated = false;
-
-	// Log opening to output
-	console.log("Opened new socket");
-
-	// Welcome user to the socket
-	socket.write("{'status':'connected'}\n");
-
-	// Custom write function
-	socket.send = function(data) {
-		socket.write(JSON.stringify(data) + "\n");
-	}
-
+	response.socket = socket
+	response.write("connected");
 
 	// When client sends data
 	socket.on('data', function(data) {
-		var response = {};
-
-		data = utils.convert(data, function() {error.warn("failed to parse")});
-
-
-		if (!authenticated){
-			var auth = authenticate(data)
-			socket.name = auth[0];
-			socket.tables = auth[1];
-			console.log("User " + socket.name + " checked in");
-
-			// if the can access tables, let them know
-			if (socket.tables.length > 0) {
-				authenticated = true;
-
-				response.status = "success";
-				response.tables = socket.tables;
-				socket.send(response);
-			}
-
-			// If the user has no tables, bye bye
-			else {
-				socket.end(req.error("authentication failed"));
-			}
-		}
-
-		// If user is authenticated...
-		else {
-			try {
-				// If the user can't access the table, let them know
-				if (!contain(socket.tables, data.table)) {
-					socket.end(req.error("access denied"));
-				}
-
-				// If the user can access the table, proceed
-				else{
-					//TODO: Make new table if one does not exist
-					var table_name = config.db + data.table + ".json";
-					var table = require(table_name);
-
-					// If they are getting data
-					if (data.req === "get"){
-						response.status = 'success';
-						response.data = req.get(table, data.query, data.filter);
-					}
-
-					// If they are putting data
-					if (data.req === "put") {
-						response.status = req.put(table, data.token, data.query, data.val, table_name);
-					}
-
-					// If they are checking out a table
-					if (data.req === "checkout"){
-						response.status = req.checkout(table, data.token)
-					}
-
-					// If they are checking in a table
-					if (data.req === "checkin"){
-						response.status = req.checkin(table, data.token)
-					}
-
-					// Unsupported request
-					// else {
-					// 	socket.end(req.error("unsupported request"));
-					// }
-				}
-			}
-
-			// Generic failure
-			catch(err){
-				socket.end(req.error("generic failure"));
-			}
-
-			socket.send(response);
-		}
+		response.write("recieved");
 	});
-
 
 	// When client leaves
 	socket.on('end', function() {
-		// Log it to the server output
-		console.log("User " + socket.name + " checked out")
-		console.log("Socket closed");
+		response.write("bye");
 	});
 
 	// When socket gets errors
 	socket.on('error', function(error) {
-		console.log('Socket Error: ', error.message);
+		response.write("error");
 	});
 });
 
 // Listening for any problems with the server
 server.on('error', function(error) {
-	console.log("Error: ", error.message);
+	log.warn(error);
 });
 
 // Listen on the port
 server.listen(config.port, function() {
-	console.log("Server listening at localhost on port " + config.port);
+	log.server("Server listening at localhost on port " + config.port);
 });

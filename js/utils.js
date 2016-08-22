@@ -9,7 +9,10 @@ utils = {
 		catch(err) {
 			return fail(err);
 		}
-	}
+	},
+
+	token: function(length) { return Math.random().toString(36).substr(2, length+2); },
+	contain: function (array, value) { return array.indexOf(value) > -1 },
 }
 
 module.exports = utils;
