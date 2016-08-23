@@ -1,22 +1,18 @@
 var log  = require("./log.js");
 
 response = {
+	send: function(msg) {
+		this.socket.write(msg + "\n");
+	},
+
 	write: function(msg) {
-		this.socket.write(msg);
-		console.log(msg);
+		this.send(msg);
+		log.info(msg);
 	},
 
-	server: function(msg) {
-		console.log(utils.colour("blue", msg));
-	},
-
-	warn: function(msg) {
-		console.log(utils.colour("yellow", msg));
-	},
-
-	fail: function(msg) {
-		console.log(utils.colour("red", msg));
-	},
+	parse: function(data) {
+		return data.toString().trim();
+	}
 }
 
 module.exports = response;

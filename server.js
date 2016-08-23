@@ -7,17 +7,25 @@ var log    = require("./js/log.js");
 var response = require("./js/response.js");
 
 var server = net.createServer(function(socket) {
-	response.socket = socket
-	response.write("connected");
+	// Initiate socket
+	response.socket = socket;
+
+	// Give the user a token
+	const token = utils.token(10);
+	response.send("welcome\n");
+	log.info(token + " logged in");
 
 	// When client sends data
 	socket.on('data', function(data) {
-		response.write("recieved");
+		data = response.parse(data);
+		response.send("You said " + data);
+		log.info(token + " <= " + data);
+
 	});
 
 	// When client leaves
 	socket.on('end', function() {
-		response.write("bye");
+		log.info(token + " logged out");
 	});
 
 	// When socket gets errors

@@ -9,17 +9,25 @@ colour = function(clr, string) {
 	return colours[clr] + string + "\x1b[0m"
 }
 
+function print(msg) {
+	console.log(msg);
+}
+
 log = {
+	info: function(msg) {
+		print(msg);
+	},
+
 	server: function(msg) {
-		console.log(colour("blue", msg));
+		print(colour("blue", msg));
 	},
 
 	warn: function(msg) {
-		console.log(colour("yellow", msg));
+		print(colour("yellow", msg));
 	},
 
 	fail: function(msg) {
-		console.log(colour("red", msg));
+		print(colour("red", msg));
 	},
 }
 
