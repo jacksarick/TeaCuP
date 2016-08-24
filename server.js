@@ -1,24 +1,28 @@
 #!/usr/local/bin/node
 
-var net    = require('net');
-var config = require("./config.json");
-var utils  = require("./js/utils.js");
-var log    = require("./js/log.js");
+// These libraries are imported as const. We will use them, but if they are changed it is an error.
+const net    = require('net');
+const config = require("./config.json");
+const utils  = require("./js/utils.js");
+const log    = require("./js/log.js");
+
+// The library changes based on socket connection, therefore it is variable
 var response = require("./js/response.js");
 
 var server = net.createServer(function(socket) {
 	// Initiate socket
 	response.socket = socket;
 
-	// Give the user a token
+	// Give the user a token, and greet them
 	const token = utils.token(10);
-	response.send("welcome\n");
+	response.send("connected");
 	log.info(token + " logged in");
 
 	// When client sends data
 	socket.on('data', function(data) {
 		data = response.parse(data);
-		response.send("You said " + data);
+		var cmd = response.command(data);
+		response.send(cmd(data));
 		log.info(token + " <= " + data);
 
 	});
