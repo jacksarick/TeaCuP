@@ -1,3 +1,5 @@
+'use strict';
+
 colour = function(clr, string) {
 	colours = {
 		"red"	: "\x1b[31m",

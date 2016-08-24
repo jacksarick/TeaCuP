@@ -1,3 +1,5 @@
+'use strict';
+
 // We need the log library
 const log  = require("./log.js");
 
@@ -8,10 +10,14 @@ Array.prototype.contains = function (value) { return this.indexOf(value) > -1 };
 Object.prototype.has = function (key) { return this[key] != undefined };
 
 // Dictionary of all commands for the client
-const dict = {
+var dict = {
 	VAR: function() {},
-	ECHO: function(d) { this.send(d) },
-	BYE: function() { this.socket.end("disconnected") },
+	ECHO: function(d) {
+		var r = d.split(":");
+		r = r.slice(1, r.length).join(":");
+		response.send(r);
+	},
+	BYE: function() { response.socket.end("disconnected") },
 };
 
 response = {

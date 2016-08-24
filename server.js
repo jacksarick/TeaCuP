@@ -1,4 +1,5 @@
 #!/usr/local/bin/node
+'use strict';
 
 // These libraries are imported as const. We will use them, but if they are changed it is an error.
 const net    = require('net');
@@ -20,9 +21,16 @@ var server = net.createServer(function(socket) {
 
 	// When client sends data
 	socket.on('data', function(data) {
+		// Parse the data to a string
 		data = response.parse(data);
+
+		// Interperet what command it was
 		var cmd = response.command(data);
-		response.send(cmd(data));
+
+		// Run the command
+		cmd(data);
+
+		// Log what came in
 		log.info(token + " <= " + data);
 
 	});
