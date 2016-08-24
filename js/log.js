@@ -1,7 +1,7 @@
 'use strict';
 
-colour = function(clr, string) {
-	colours = {
+const colour = function(clr, string) {
+	const colours = {
 		"red"	: "\x1b[31m",
 		"yellow": "\x1b[33m",
 		"blue"	: "\x1b[34m",
@@ -15,7 +15,7 @@ function print(msg) {
 	console.log(msg);
 }
 
-log = {
+const log = {
 	info: function(msg) {
 		print(msg);
 	},

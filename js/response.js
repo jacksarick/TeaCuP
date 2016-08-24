@@ -20,7 +20,7 @@ var dict = {
 	BYE: function() { response.socket.end("disconnected") },
 };
 
-response = {
+var response = {
 	// This will be our basic function that only sends data.
 	send: function(msg) {
 		this.socket.write(msg + "\n");
@@ -34,7 +34,7 @@ response = {
 
 	// Return the command, or lack thereof
 	command: function(data) {
-		var cmd = data.split(":")[0];
+		var cmd = data.split(":")[0].toUpperCase();
 
 		// If the command is in the dictionary...
 		if (dict.has(cmd)){
