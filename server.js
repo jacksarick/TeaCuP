@@ -10,12 +10,19 @@ const log    = require("./js/log.js");
 // The library changes based on socket connection, therefore it is variable
 var response = require("./js/response.js");
 
+// Load our database. (It's empty for now)
+var database = {};
+
+// Link the database to the response library
+response.db = database;
+
 var server = net.createServer(function(socket) {
 	// Initiate socket
 	response.socket = socket;
 
-	// Give the user a token, and greet them
+	// Give the user a token, a local array, and greet them
 	const token = utils.token(10);
+	var array = {};
 	response.send("connected");
 	log.info(token + " logged in");
 

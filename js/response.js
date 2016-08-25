@@ -9,7 +9,10 @@ Object.prototype.has = function (key) { return this[key] != undefined };
 
 // Dictionary of all commands for the client
 var dict = {
-	VAR: function() {},
+	VAR: function(key) {
+		return response.db[key];
+	},
+
 	ECHO: function(d) {
 		// Parse out the rest of the text
 		var r = d.split(":");
@@ -21,6 +24,7 @@ var dict = {
 		// Record what we sent
 		return r;
 	},
+
 	BYE: function() {
 		response.socket.end("disconnected");
 	},
