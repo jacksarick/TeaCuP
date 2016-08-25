@@ -1,5 +1,3 @@
-'use strict';
-
 // We need the log library
 const log  = require("./log.js");
 

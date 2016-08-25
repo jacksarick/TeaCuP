@@ -1,5 +1,3 @@
-'use strict';
-
 const colour = function(clr, string) {
 	const colours = {
 		"red"	: "\x1b[31m",
