@@ -7,27 +7,42 @@ Array.prototype.contains = function (value) { return this.indexOf(value) > -1 };
 // Basic method for testing if an object contains a key
 Object.prototype.has = function (key) { return this[key] != undefined };
 
-const clean = function(string) {
+// Function to clean up the input
+function clean(string) {
+	// split the string on each :
 	var r = string.split(":");
+
+	// Take all except the first
 	r = r.slice(1, r.length).join(":");
+
+	// return result
 	return r;
+}
+
+// Function to pull data from a given path
+function find(data, path) {
+	// This is actually a cool little piece of code IMO. The recursion loops through each argument and applys them one by one to the data
+	if (path.length === 0){
+		return data;
+	}
+
+	return find(data[path.shift()], path);
 }
 
 // Dictionary of all commands for the client
 var dict = {
 	VAR: function(key) {
-		return JSON.stringify(response.db[clean(key)]);
+		// We are going to split the key, then use it as a path to find a value in the database. Once we have the data, we return the data as a string
+		return JSON.stringify(find(response.db, clean(key).split(".")));
 	},
 
 	ECHO: function(d) {
-		// Send off a cleaned version of the text
-		response.send(clean(d));
-
-		// Record what we sent
+		// Send the data sent
 		return clean(d);
 	},
 
 	BYE: function() {
+		// The termination will take priority over the return
 		response.socket.end("disconnected");
 	},
 };

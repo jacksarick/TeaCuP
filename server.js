@@ -40,8 +40,11 @@ var server = net.createServer(function(socket) {
 		// Run command, collect result
 		var output = cmd(data);
 
-		// Run the command, log result, if not undefined
+		// Send the command to the user
+
+		// Send the command to the user and log it, but if there is actually something to log.
 		if (output != undefined){
+			response.send(output);
 			log.info(token + " => " + output);
 		}
 
