@@ -1,5 +1,5 @@
 // We need the log library
-const log  = require("./log.js");
+const log = require("./log.js");
 
 // Basic method for testing if a list contains a value
 Array.prototype.contains = function (value) { return this.indexOf(value) > -1 };
@@ -7,22 +7,24 @@ Array.prototype.contains = function (value) { return this.indexOf(value) > -1 };
 // Basic method for testing if an object contains a key
 Object.prototype.has = function (key) { return this[key] != undefined };
 
+const clean = function(string) {
+	var r = string.split(":");
+	r = r.slice(1, r.length).join(":");
+	return r;
+}
+
 // Dictionary of all commands for the client
 var dict = {
 	VAR: function(key) {
-		return response.db[key];
+		return JSON.stringify(response.db[clean(key)]);
 	},
 
 	ECHO: function(d) {
-		// Parse out the rest of the text
-		var r = d.split(":");
-		r = r.slice(1, r.length).join(":");
-
-		// Send it off
-		response.send(r);
+		// Send off a cleaned version of the text
+		response.send(clean(d));
 
 		// Record what we sent
-		return r;
+		return clean(d);
 	},
 
 	BYE: function() {
