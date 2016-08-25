@@ -13,11 +13,19 @@ Object.prototype.has = function (key) { return this[key] != undefined };
 var dict = {
 	VAR: function() {},
 	ECHO: function(d) {
+		// Parse out the rest of the text
 		var r = d.split(":");
 		r = r.slice(1, r.length).join(":");
+
+		// Send it off
 		response.send(r);
+
+		// Record what we sent
+		return r;
 	},
-	BYE: function() { response.socket.end("disconnected") },
+	BYE: function() {
+		response.socket.end("disconnected");
+	},
 };
 
 var response = {

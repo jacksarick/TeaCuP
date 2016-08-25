@@ -26,12 +26,17 @@ var server = net.createServer(function(socket) {
 
 		// Interperet what command it was
 		var cmd = response.command(data);
-
-		// Run the command
-		cmd(data);
-
+		
 		// Log what came in
 		log.info(token + " <= " + data);
+
+		// Run command, collect result
+		var output = cmd(data);
+
+		// Run the command, log result, if not undefined
+		if (output != undefined){
+			log.info(token + " => " + output);
+		}
 
 	});
 
