@@ -10,7 +10,7 @@ const colour = function(clr, string) {
 }
 
 function print(msg) {
-	console.log(msg.toString());
+	console.log(msg);
 }
 
 const log = {

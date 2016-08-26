@@ -1,4 +1,5 @@
 - [x] GET: get a variable value
 - [x] SET: set a variable value
+- [ ] See if we can secure the connection
 - [ ] Add command line interaction
 - [ ] Save to file
