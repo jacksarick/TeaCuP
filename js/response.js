@@ -54,7 +54,7 @@ var dict = {
 		const value = input.slice(1, input.length).join(" ");
 
 		response.db = update(response.db, key, value);
-		return value + " updated";
+		return key + " updated";
 
 	},
 

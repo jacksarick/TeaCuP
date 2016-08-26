@@ -1,4 +1,4 @@
 - [x] GET: get a variable value
-- [ ] SET: set a variable value
+- [x] SET: set a variable value
 - [ ] Add command line interaction
 - [ ] Save to file
