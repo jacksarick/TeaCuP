@@ -1,10 +1,10 @@
 var tls = require('tls'),
 	fs = require('fs'),
-	msg = "hellow world!";
+	msg = "hello world!";
 
 var options = {
-	key: fs.readFileSync('private-key.pem'),
-  cert: fs.readFileSync('public-cert.pem')
+	key: fs.readFileSync('cert/private-key.pem'),
+  cert: fs.readFileSync('cet.public-cert.pem')
 };
 
 tls.createServer(options, function (socket) {
