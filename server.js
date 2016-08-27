@@ -1,6 +1,10 @@
 #!/usr/local/bin/nodemon --use-strict
 // This shebang is the one I use for development, it should not be recomended for deployment
 
+// I use 'use strict' because it enforces good programming habits.
+// As it only applies to the file it is, I run the server with the --use-strict flag, which applies it to all files run.
+'use strict';
+
 // The first thing we import is logs, so that if something goes wrong right away, we know.
 const log = require("./js/log.js");
 
