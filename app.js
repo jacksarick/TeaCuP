@@ -1,5 +1,8 @@
+// I use 'use strict' because it enforces good programming habits.
+// As it only applies to the file it is, I run the server with the --use-strict flag
+'use strict';
+
 // These libraries are imported as const. We will use them, but if they are changed it is an error.
-const config = require("./config.json");
 const utils  = require("./js/utils.js");
 const log    = require("./js/log.js");
 
