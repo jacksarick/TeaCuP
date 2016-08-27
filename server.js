@@ -16,23 +16,6 @@ var database = {"names":{"john":30,"stacy":34,"joe":16,"carol":21},"numbers":[78
 // Link the database to the response library
 response.db = database;
 
-function censor(censor) {
-  var i = 0;
-
-  return function(key, value) {
-    if(i !== 0 && typeof(censor) === 'object' && typeof(value) == 'object' && censor == value) 
-      return '[Circular]'; 
-
-    if(i >= 29) // seems to be a harded maximum of 30 serialized objects?
-      return '[Unknown]';
-
-    ++i; // so we know we aren't using the original object anymore
-
-    return value;  
-  }
-}
-
-
 var server = net.createServer(function(socket) {
 	// Initiate socket
 	response.socket = socket;
@@ -41,7 +24,7 @@ var server = net.createServer(function(socket) {
 	const token = utils.token(10);
 	var array = {};
 	response.send("connected");
-	console.log(socket.remoteAddress);
+	// console.log(socket.remoteAddress);
 	log.info(token + " logged in");
 
 	// When client sends data
@@ -88,3 +71,5 @@ server.on('error', function(error) {
 server.listen(config.port, function() {
 	log.server("Server listening at localhost on port " + config.port);
 });
+
+module.exports = server;

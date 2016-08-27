@@ -1,3 +1,9 @@
+/*
+This is a simple test of tls. It's just an echo server over tls. To connect from the command line, use:
+	penssl s_client -connect [host]:[port]
+or equivalent.
+*/
+
 var tls = require('tls');
 var fs = require('fs');
 
