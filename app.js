@@ -1,6 +1,6 @@
 // These libraries are imported as const. We will use them, but if they are changed it is an error.
-const utils  = require("./js/utils.js");
-const log    = require("./js/log.js");
+const log   = require("./js/log.js");
+const file  = require("./js/file.js");
 
 // The library changes based on socket connection, therefore it is variable
 var response = require("./js/response.js");
@@ -16,7 +16,7 @@ function app(socket) {
 	response.socket = socket;
 
 	// Give the user a token, a local array, and greet them
-	const token = utils.token(10);
+	const token = Math.random().toString(36).substr(2, 12);
 	var array = {};
 	response.send("connected");
 	log.info(token + " logged in");

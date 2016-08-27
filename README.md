@@ -28,4 +28,4 @@ qfrdvpxh94a7 logged out
 2k5f27rnr1nm logged out
 ```
 
-To interact with the server on the command line, I suggest using `netcat`.
+To interact with the server over tcp on the command line, I suggest using `netcat`. For SSL, I suggest `openssl`
