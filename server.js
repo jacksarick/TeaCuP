@@ -1,10 +1,8 @@
 #!/usr/local/bin/nodemon --use-strict
 // This shebang is the one I use for development, it should not be recomended for deployment
 
-// The only libraries we need are net and log. 
-// Everything else is imported with app.js
-const net 	 = require('net');
-const log    = require("./js/log.js");
+// The first thing we import is logs, so that if something goes wrong right away, we know.
+const log = require("./js/log.js");
 
 // The configuration for the server
 const config = require("./config.json").server;
@@ -12,7 +10,32 @@ const config = require("./config.json").server;
 // Our actual app. The server just acts as a connection mechanism
 var app = require("./app.js");
 
-var server = net.createServer(app);
+// There are two servers we can make, tcp or tls. tls is secure, tcp isn't
+// If the config is set up for tls, use it
+if (config.secure){
+	// First, get the certs.
+	// fs is a a library to read local files
+	const fs  = require('fs');
+
+	// Read our cert and key from the file
+	const options = {
+		key: fs.readFileSync(config.ssl.key),
+		cert: fs.readFileSync(config.ssl.cert)
+	};
+
+	// tls is the secure library
+	const tls = require('tls');
+
+	// Create a server with our cert and key
+	var server = tls.createServer(options, app);
+}
+
+// If they don't, use tcp
+else {
+	// Import the "net" library, and make a server with it
+	const net = require('net');
+	var server = net.createServer(app);
+}
 
 // Listening for any problems with the server
 server.on('error', function(error) {
