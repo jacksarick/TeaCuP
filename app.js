@@ -1,6 +1,6 @@
 // These libraries are imported as const. We will use them, but if they are changed it is an error.
-const log   = require("./js/log.js");
-const file  = require("./js/file.js");
+const log  = require("./js/log.js");
+const file = require("./js/file.js");
 
 // The library changes based on socket connection, therefore it is variable
 var response = require("./js/response.js");
