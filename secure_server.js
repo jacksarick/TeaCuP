@@ -1,38 +1,33 @@
-var tls = require('tls');
-var fs = require('fs');
+#!/usr/local/bin/nodemon --use-strict
+// This shebang is the one I use for development, it should not be recomended for deployment
 
-var options = {
-	key: fs.readFileSync('cert/private-key.pem'),
-  cert: fs.readFileSync('cert/public-cert.pem')
+// We use tls instead of net, and we need fs to read our certs
+const tls = require('tls');
+const fs  = require('fs');
+const log = require("./js/log.js");
+
+// The configuration for the server
+const config = require("./config.json").server;
+
+// Read our cert and key from the file
+const options = {
+	key: fs.readFileSync(config.ssl.key),
+	cert: fs.readFileSync(config.ssl.cert)
 };
 
-// What port to listen on
-const port = 3334;
+// Our actual app. The server just acts as a connection mechanism
+var app = require("./app.js");
 
-// Make the server
-var server = tls.createServer(options, function (socket) {
-	
-	// When the client connects, say hi
-	socket.write("welcome");
+// Make the server.
+// It's pretty much the same as last time, but now we have to include our cert and key
+var server = tls.createServer(options, app);
 
-	// When client sends data
-	socket.on('data', function(data) {
-		socket.write("You said: " + data.toString());
-	});
-
-	// When client leaves
-	socket.on('end', function() {
-		console.log(token + " logged out");
-	});
-
-	// When socket gets errors
-	socket.on('error', function(error) {
-		socket.write("error");
-	});
+// Listening for any problems with the server
+server.on('error', function(error) {
+	log.warn(error);
 });
 
-
 // Tell the server to listen on specified port
-server.listen(port, function() {
-	console.log("Server listening at localhost on port " + port);
+server.listen(config.port, function() {
+	log.server("Server listening at localhost on port " + config.port);
 });

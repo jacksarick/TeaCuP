@@ -19,9 +19,7 @@ server.on('error', function(error) {
 	log.warn(error);
 });
 
-// Listen on the port
+// Tell the server to listen on specified port
 server.listen(config.port, function() {
 	log.server("Server listening at localhost on port " + config.port);
 });
-
-module.exports = server;
