@@ -1,0 +1,14 @@
+{
+	"server": {
+		"port": 3333,
+
+		"secure": false,
+
+		"ssl": {
+			"key": "cert/private-key.pem",
+			"cert": "cert/public-cert.pem"
+		}
+	},
+	
+	"db": "./data/"
+}
