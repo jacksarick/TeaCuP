@@ -12,9 +12,9 @@ function app(socket) {
 	// Initiate socket
 	response.socket = socket;
 
-	// Give the user a token, a local array, and greet them
+	// Give the user a token, a list of tables, and greet them
 	const token = Math.random().toString(36).substr(2, 12);
-	var array = {};
+	socket.tables = [];
 	response.send("connected");
 	log.info(token + " logged in");
 

@@ -11,7 +11,7 @@ Object.prototype.has = function (key) { return this[key] != undefined };
 // Function to clean up the input
 function clean(string) {
 	// split the string on each space
-	var r = string.split(" ");
+	let r = string.split(" ");
 
 	// Take all except the first
 	r = r.slice(1, r.length).join(" ");
@@ -45,14 +45,19 @@ function update(data, path, value) {
 // Dictionary of all commands for the client
 var dict = {
 	GET: function(key) {
-		// We are going to split the key, then use it as a path to find a value in the database. Once we have the data, we return the data as a string
-		return JSON.stringify(find(response.db, clean(key).split(".")));
+		// We are going to split the key, then use it as a path to find a value in the database.
+		let path = clean(key).split(".");
+
+		// If the table isn't one the user has, fail
+		if (!response.socket.tables.has(path[0])) return "failed";
+
+		return JSON.stringify(find(response.db, path));
 	},
 
 	SET: function(input) {
 		input = clean(input).split(" ")
-		const key = input[0].split(".");
-		const value = input.slice(1, input.length).join(" ");
+		let key = input[0].split(".");
+		let value = input.slice(1, input.length).join(" ");
 
 		response.db = update(response.db, key, value);
 		return key + " updated";
@@ -74,8 +79,21 @@ var dict = {
 
 		let p = d[0],
 			f = d.slice(1, d.length).join(" ");
+
 		try {
-			response.db = IO.read(p,f);
+			let table = IO.open(p, f);
+
+			if (!table) return "failed"
+
+			// If the database is not loaded, load it
+			if (!response.db.has(f)) {
+				response.db[f] = table;
+			}
+	
+			// Add the table to the user's list
+			response.socket.tables.push(f);
+
+			// Tell the user it worked
 			return f + " loaded";
 		}
 
