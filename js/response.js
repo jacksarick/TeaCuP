@@ -74,7 +74,6 @@ var dict = {
 
 		let p = d[0],
 			f = d.slice(1, d.length).join(" ");
-
 		try {
 			response.db = IO.read(p,f);
 			return f + " loaded";
