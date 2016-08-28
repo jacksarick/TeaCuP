@@ -1,5 +1,6 @@
-// We need the log library
+// We need the log library, and the IO library
 const log = require("./log.js");
+const IO  = require("./file.js");
 
 // Basic method for testing if a list contains a value
 Array.prototype.contains = function (value) { return this.indexOf(value) > -1 };
@@ -9,7 +10,7 @@ Object.prototype.has = function (key) { return this[key] != undefined };
 
 // Function to clean up the input
 function clean(string) {
-	// split the string on each :
+	// split the string on each space
 	var r = string.split(" ");
 
 	// Take all except the first
@@ -67,6 +68,23 @@ var dict = {
 		// The termination will take priority over the return
 		response.socket.end("disconnected");
 	},
+
+	LOAD: function(d) {
+		d = clean(d).split(" ");
+
+		let p = d[0],
+			f = d.slice(1, d.length).join(" ");
+
+		try {
+			response.db = IO.read(p,f);
+			return f + " loaded";
+		}
+
+		catch(e) {
+			log.fail(e);
+			return "failed";
+		}
+	}
 };
 
 var response = {
