@@ -5,11 +5,8 @@ const file = require("./js/file.js");
 // The library changes based on socket connection, therefore it is variable
 var response = require("./js/response.js");
 
-// // Load our database. (It's hardcoded for now with random data)
-// var database = {"names":{"john":30,"stacy":34,"joe":16,"carol":21},"numbers":[78,179,132,182,12,9],"default":true};
-
-// // Link the database to the response library
-// response.db = database;
+// Link an empty database to the response library
+response.db = {};
 
 function app(socket) {
 	// Initiate socket

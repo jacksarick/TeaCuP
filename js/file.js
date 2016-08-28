@@ -27,7 +27,7 @@ var IO = {
 	},
 
 	open: function(file){
-		return fs.readFileSync(file).toString();
+		return fs.readFileSync(config.root + file + ".tea").toString();
 	},
 
 	read: function(pass, file) {
