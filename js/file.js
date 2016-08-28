@@ -28,24 +28,18 @@ var IO = {
 	},
 
 	// Read file to string
-	open: function(file){
+	read: function(file){
 		return fs.readFileSync(config.root + file + ".tea").toString();
 	},
 
 	// Open file, decrypt it, and convert it
-	read: function(pass, file) {
-		const data = this.convert(crypto.decrypt(pass, this.open(file)));
+	open: function(pass, file) {
+		const data = this.convert(crypto.decrypt(pass, this.read(file)));
 
 		if (!data) return false;
 		
 		return data;
 	},
-
-	// Returns boolean of whether the user can access a file
-	access: function(pass, file) {
-		// Double negative returns true for everything except false, undefined, and null.
-		return !!this.read(pass, file);
-	}
 };
 
 module.exports = IO;
