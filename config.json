@@ -10,5 +10,9 @@
 		}
 	},
 	
-	"db": "./data/"
+
+	"database": {
+		"root": "./data/",
+		"encryption": "./js/encrypt.js"
+	}
 }

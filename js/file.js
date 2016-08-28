@@ -1,8 +1,14 @@
+// The configuration file for the database
+const config = require("./config.json").database;
+
+// Reading in files is normally 25% of my error logs, so this library is getting imported ASAP
+const log = require("./log.js");
+
 // The built-in node library for interacting with local files
 const fs = require("fs");
 
-// Reading in files is normally 25% of my error logs.
-const log   = require("./log.js");
+// This will be our function for encrypting and decrypting data
+const crypto = require("../" + config.encryption);
 
 var file = {
 	convert: function(data) {
