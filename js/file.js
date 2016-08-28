@@ -1,5 +1,5 @@
 // The configuration file for the database
-const config = require("./config.json").database;
+const config = require("../config.json").database;
 
 // Reading in files is normally 25% of my error logs, so this library is getting imported ASAP
 const log = require("./log.js");
@@ -8,9 +8,9 @@ const log = require("./log.js");
 const fs = require("fs");
 
 // This will be our function for encrypting and decrypting data
-const crypto = require("../" + config.encryption);
+const crypto = require("./encrypt.js");
 
-var file = {
+var IO = {
 	convert: function(data) {
 		try {
 			// If it all goes well, just return the data
@@ -26,7 +26,17 @@ var file = {
 		}
 	},
 
-	read: function(file){
-		return this.convert(fs.readFileSync(file));
+	open: function(file){
+		return fs.readFileSync(file).toString();
+	},
+
+	read: function(pass, file) {
+		const data = this.convert(crypto.decrypt(pass, this.open(file)));
+
+		if (!data) return false;
+		
+		return data;
 	}
 };
+
+module.exports = IO;
