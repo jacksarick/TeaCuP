@@ -83,7 +83,7 @@ var dict = {
 		try {
 			let table = IO.open(p, f);
 
-			if (!table) return "failed"
+			if (!table) return "password failed"
 
 			// If the database is not loaded, load it
 			if (!response.db.has(f)) {
@@ -99,7 +99,7 @@ var dict = {
 
 		catch(e) {
 			log.fail(e);
-			return "failed";
+			return "load failed";
 		}
 	}
 };
