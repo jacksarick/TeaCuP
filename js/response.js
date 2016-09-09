@@ -81,7 +81,14 @@ var dict = {
 			f = d.slice(1, d.length).join(" ");
 
 		try {
-			let table = IO.open(p, f);
+			let table;
+			try {
+				table = IO.open(p, f);
+			}
+
+			catch(e) {
+				return "no table named " + f;
+			}
 
 			if (!table) return "password failed"
 
