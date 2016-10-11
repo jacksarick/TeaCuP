@@ -1,3 +1,6 @@
+##October 11:
+Wow. Long break. Not really restarting, just revisitng for a bit. Maybe I'll do more later. Anyway, started using [hotel](https://github.com/typicode/hotel), and this is the command I used to add it as a process: `hotel add 'find . | entr sh -c node server.js' --name teacup --out error.log`
+
 ##Aug 31:
 OK. Took a break to think, and came back to look at the problem. The server can only handle one socket at a time. What's happening is the `socket` var I haphazardly passed to the `response.js` library is getting shared across all connections. I need to seperate it back out.
 
