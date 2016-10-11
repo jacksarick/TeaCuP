@@ -2,16 +2,12 @@
 const log  = require("./js/log.js");
 const file = require("./js/file.js");
 
-
 function app(socket) {
 	// The library changes based on socket connection, therefore it is variable
 	var response = Object.create(require("./js/response.js"));
 
 	// Initiate socket
 	response.socket = socket;
-
-	// Link an empty database to the response library
-	response.db = {};
 
 	// Give the user a token, a list of tables, and greet them
 	const token = Math.random().toString(36).substr(2, 12);

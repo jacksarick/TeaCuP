@@ -1,6 +1,7 @@
 // We need the log library, and the IO library
 const log = require("./log.js");
 const IO  = require("./file.js");
+var  stat = require("")
 
 // Basic method for testing if a list contains a value
 Array.prototype.contains = function (value) { return this.indexOf(value) > -1 };
@@ -82,6 +83,7 @@ var dict = {
 
 		try {
 			let table;
+
 			try {
 				table = IO.open(p, f);
 			}
@@ -112,6 +114,7 @@ var dict = {
 };
 
 var response = {
+
 	// This will be our basic function that only sends data.
 	send: function(msg) {
 		this.socket.write(msg + "\n");
